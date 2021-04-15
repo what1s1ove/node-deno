@@ -1,0 +1,7 @@
+{
+  "private": true,
+  "dependencies": {
+    "koa": "2.13.1"
+  },
+  "devDependencies": {}
+}
