@@ -4,6 +4,7 @@
     "start": "nodemon -r dotenv/config src/server.js"
   },
   "dependencies": {
+    "axios": "0.21.1",
     "dotenv": "8.2.0",
     "koa": "2.13.1",
     "koa-router": "10.0.0",
