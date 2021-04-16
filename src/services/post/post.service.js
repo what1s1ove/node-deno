@@ -1,7 +1,8 @@
-const { ApiPath, HttpMethod } = require('../../common/enums');
+const { ApiPath, HttpMethod, BooksApiPath } = require('../../common/enums');
 
 class Post {
-  constructor({ http }) {
+  constructor({ baseUrl, http }) {
+    this._baseUrl = baseUrl;
     this._http = http;
   }
 
@@ -12,13 +13,13 @@ class Post {
   }
 
   findOne(id) {
-    return this._http.load(this._getUrl(id), {
+    return this._http.load(this._getUrl(`/${id}`), {
       method: HttpMethod.GET,
     });
   }
 
-  _getUrl(path = '') {
-    return `${ApiPath.POSTS}${path}`;
+  _getUrl(path = BooksApiPath.ROOT) {
+    return `${this._baseUrl}${ApiPath.POSTS}${path}`;
   }
 }
 

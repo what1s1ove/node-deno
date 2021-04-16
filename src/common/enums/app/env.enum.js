@@ -1,4 +1,4 @@
-const { PORT } = process.env;
+const { PORT, PLACEHOLDER_API_URL } = process.env;
 
 const ENV = {
   APP: {
@@ -6,6 +6,9 @@ const ENV = {
   },
   API: {
     V1_PATH: '/api/v1',
+  },
+  API_URL: {
+    PLACEHOLDER_API: PLACEHOLDER_API_URL,
   },
 };
 
