@@ -7,24 +7,30 @@ const initBooksApi = ({ Router, services }) => {
     prefix: ApiPath.BOOKS,
   });
 
-  router.get(BooksApiPath.ROOT, (ctx) => {
-    ctx.body = bookService.findAll();
+  router.get(BooksApiPath.ROOT, async (ctx) => {
+    ctx.body = await bookService.findAll();
   });
 
-  router.get(BooksApiPath.$ID, (ctx) => {
-    ctx.body = bookService.findOne();
+  router.get(BooksApiPath.$ID, async (ctx) => {
+    const { params } = ctx;
+
+    ctx.body = await bookService.findOne(params.id);
   });
 
-  router.post(BooksApiPath.ROOT, (ctx) => {
-    ctx.body = bookService.create();
+  router.post(BooksApiPath.ROOT, async (ctx) => {
+    ctx.body = await bookService.create();
   });
 
-  router.put(BooksApiPath.$ID, (ctx) => {
-    ctx.body = bookService.update();
+  router.put(BooksApiPath.$ID, async (ctx) => {
+    const { params } = ctx;
+
+    ctx.body = await bookService.update(params.id);
   });
 
-  router.delete(BooksApiPath.$ID, (ctx) => {
-    ctx.body = bookService.delete();
+  router.delete(BooksApiPath.$ID, async (ctx) => {
+    const { params } = ctx;
+
+    ctx.body = await bookService.delete(params.id);
   });
 
   return router;
