@@ -1,8 +1,8 @@
-const BooksApiPath = {
+const PostApiPath = {
   ROOT: '/',
   $ID: '/:id',
 };
 
 module.exports = {
-  BooksApiPath,
+  PostApiPath,
 };
