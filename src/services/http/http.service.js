@@ -6,7 +6,7 @@ class Http {
     this._http = axios.create({});
   }
 
-  _load(
+  load(
     url,
     options = {
       method: HttpMethod.GET,
