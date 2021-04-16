@@ -1,7 +1,8 @@
 const { ENV } = require('../common/enums');
 const { initBooksApi } = require('./books/books.api');
+const { initPostsApi } = require('./posts/posts.api');
 
-const apis = [initBooksApi];
+const apis = [initBooksApi, initPostsApi];
 
 const initApis = ({ Router, services }) => {
   const apiRouter = new Router({
