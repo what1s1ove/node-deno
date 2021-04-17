@@ -35,7 +35,7 @@ rules:
 
 overrides:
   - files:
-    - src/common/enums/api/**/*
+    - src/common/enums/file/**/*
     rules:
       no-undef:
         - off
