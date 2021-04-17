@@ -1,26 +1,22 @@
-const path = require('path');
-const { readFile, writeFile } = require('../../helpers');
-const {
-  getBookById,
-  getNewBook,
-  updateBook,
-  removeBook,
-} = require('./helpers');
+import path from 'path';
+import { readFile, writeFile } from '../../helpers';
+import { Book as BookType, CreateBookPayload } from '../../common/types';
+import { getBookById, getNewBook, updateBook, removeBook } from './helpers';
 
 const booksDataPath = path.resolve(__dirname, './books.json');
 
 class Book {
-  findAll() {
+  findAll(): Promise<BookType[]> {
     return this._getBooks();
   }
 
-  async findOne(id) {
+  async findOne(id: string): Promise<BookType | null> {
     const books = await this._getBooks();
 
     return getBookById(books, id);
   }
 
-  async create(payload) {
+  async create(payload: CreateBookPayload): Promise<BookType> {
     const newBook = getNewBook(payload);
     const books = await this._getBooks();
 
@@ -29,7 +25,7 @@ class Book {
     return newBook;
   }
 
-  async update(payload) {
+  async update(payload: BookType): Promise<BookType> {
     const books = await this._getBooks();
     const updatedBooks = updateBook(books, payload);
 
@@ -38,7 +34,7 @@ class Book {
     return payload;
   }
 
-  async delete(id) {
+  async delete(id: string): Promise<boolean> {
     const books = await this._getBooks();
     const updatedBooks = removeBook(books, id);
     const isDeleted = books.length > updatedBooks.length;
@@ -50,17 +46,15 @@ class Book {
     return isDeleted;
   }
 
-  async _getBooks() {
+  async _getBooks(): Promise<BookType[]> {
     const books = await readFile(booksDataPath);
 
-    return JSON.parse(books);
+    return JSON.parse(books.toString());
   }
 
-  _saveBooks(books) {
+  _saveBooks(books: BookType[]): Promise<void> {
     return writeFile(booksDataPath, JSON.stringify(books));
   }
 }
 
-module.exports = {
-  Book,
-};
+export { Book };
