@@ -1,8 +1,6 @@
 const BooksApiPath = {
   ROOT: '/',
   $ID: '/:id',
-};
+} as const;
 
-module.exports = {
-  BooksApiPath,
-};
+export { BooksApiPath };

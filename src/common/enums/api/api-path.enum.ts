@@ -1,8 +1,6 @@
 const ApiPath = {
   BOOKS: '/books',
   POSTS: '/posts',
-};
+} as const;
 
-module.exports = {
-  ApiPath,
-};
+export { ApiPath };

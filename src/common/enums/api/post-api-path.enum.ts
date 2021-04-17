@@ -1,8 +1,6 @@
 const PostApiPath = {
   ROOT: '/',
   $ID: '/:id',
-};
+} as const;
 
-module.exports = {
-  PostApiPath,
-};
+export { PostApiPath };
