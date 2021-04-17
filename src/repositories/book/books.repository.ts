@@ -1,22 +1,23 @@
 import path from 'path';
 import { readFile, writeFile } from '../../helpers';
-import { Book as BookType, CreateBookPayload } from '../../common/types';
+import { Book, CreateBookPayload } from '../../common/types';
+import { IRepository } from '../../common/interfaces';
 import { getBookById, getNewBook, updateBook, removeBook } from './helpers';
 
 const booksDataPath = path.resolve(__dirname, './books.json');
 
-class Book {
-  findAll(): Promise<BookType[]> {
+class Books implements IRepository<Book> {
+  findAll(): Promise<Book[]> {
     return this._getBooks();
   }
 
-  async findOne(id: string): Promise<BookType | null> {
+  public async findOne(id: string): Promise<Book | null> {
     const books = await this._getBooks();
 
     return getBookById(books, id);
   }
 
-  async create(payload: CreateBookPayload): Promise<BookType> {
+  public async create(payload: CreateBookPayload): Promise<Book> {
     const newBook = getNewBook(payload);
     const books = await this._getBooks();
 
@@ -25,7 +26,7 @@ class Book {
     return newBook;
   }
 
-  async update(payload: BookType): Promise<BookType> {
+  public async update(payload: Book): Promise<Book> {
     const books = await this._getBooks();
     const updatedBooks = updateBook(books, payload);
 
@@ -34,7 +35,7 @@ class Book {
     return payload;
   }
 
-  async delete(id: string): Promise<boolean> {
+  public async delete(id: string): Promise<boolean> {
     const books = await this._getBooks();
     const updatedBooks = removeBook(books, id);
     const isDeleted = books.length > updatedBooks.length;
@@ -46,15 +47,15 @@ class Book {
     return isDeleted;
   }
 
-  async _getBooks(): Promise<BookType[]> {
+  private async _getBooks(): Promise<Book[]> {
     const books = await readFile(booksDataPath);
 
     return JSON.parse(books.toString());
   }
 
-  _saveBooks(books: BookType[]): Promise<void> {
+  private _saveBooks(books: Book[]): Promise<void> {
     return writeFile(booksDataPath, JSON.stringify(books));
   }
 }
 
-export { Book };
+export { Books };
