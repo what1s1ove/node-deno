@@ -10,8 +10,6 @@ const ENV = {
   API_URL: {
     PLACEHOLDER_API: PLACEHOLDER_API_URL,
   },
-};
+} as const;
 
-module.exports = {
-  ENV,
-};
+export { ENV };

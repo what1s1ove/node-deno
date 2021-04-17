@@ -32,3 +32,12 @@ rules:
     - always-multiline
   '@typescript-eslint/explicit-module-boundary-types':
     - error
+
+overrides:
+  - files:
+    - src/common/enums/api/**/*
+    rules:
+      no-undef:
+        - off
+      '@typescript-eslint/no-var-requires':
+        - off

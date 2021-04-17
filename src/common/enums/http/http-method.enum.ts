@@ -3,8 +3,6 @@ const HttpMethod = {
   POST: 'POST',
   PUT: 'PUT',
   DELETE: 'DELETE',
-};
+} as const;
 
-module.exports = {
-  HttpMethod,
-};
+export { HttpMethod };
