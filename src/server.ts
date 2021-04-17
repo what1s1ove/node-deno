@@ -1,5 +1,5 @@
-import { resolve } from 'path'
-import Koa from 'koa'
+import { resolve } from 'path';
+import Koa from 'koa';
 import serve from 'koa-static';
 import Router from 'koa-router';
 import bodyParser from 'koa-bodyparser';

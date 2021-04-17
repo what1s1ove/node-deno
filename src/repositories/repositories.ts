@@ -1,7 +1,10 @@
-import { IRepository } from '../common/interfaces';
 import { Books } from './book/books.repository';
 
-const initRepositories = (): Record<string, IRepository<unknown>> => {
+type Repositories = {
+  books: Books;
+};
+
+const initRepositories = (): Repositories => {
   const books = new Books();
 
   return {

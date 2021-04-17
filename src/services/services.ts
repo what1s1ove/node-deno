@@ -1,11 +1,11 @@
 import { ENV } from '../common/enums';
-import { IRepository } from '../common/interfaces';
+import { initRepositories } from '../repositories/repositories';
 import { Books } from './books/books.service';
 import { Http } from './http/http.service';
 import { Posts } from './post/posts.service';
 
 type Args = {
-  repositories: Record<string, IRepository<unknown>>;
+  repositories: ReturnType<typeof initRepositories>;
 };
 
 type Services = {
