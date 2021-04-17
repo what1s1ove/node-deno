@@ -18,13 +18,15 @@ const initBooksApi = ({ Router, services }) => {
   });
 
   router.post(BooksApiPath.ROOT, async (ctx) => {
-    ctx.body = await bookService.create();
+    const { request } = ctx;
+
+    ctx.body = await bookService.create(request.body);
   });
 
   router.put(BooksApiPath.$ID, async (ctx) => {
-    const { params } = ctx;
+    const { request } = ctx;
 
-    ctx.body = await bookService.update(params.id);
+    ctx.body = await bookService.update(request.body);
   });
 
   router.delete(BooksApiPath.$ID, async (ctx) => {
