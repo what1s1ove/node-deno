@@ -1,27 +1,26 @@
-import RouterType from 'koa-router';
-import { initServices } from '../services/services';
-import { ENV } from '../common/enums';
-import { initBooksApi } from './books/books.api';
-import { initPostsApi } from './posts/posts.api';
+import { Oak } from '../dependencies.ts';
+import { initServices } from '../services/services.ts';
+import { ENV } from '../common/enums/index.ts';
+import { initBooksApi } from './books/books.api.ts';
+import { initPostsApi } from './posts/posts.api.ts';
 
 type Args = {
-  Router: typeof RouterType;
+  app: Oak.Application;
+  Router: typeof Oak.Router;
   services: ReturnType<typeof initServices>;
 };
 
-const initApis = ({ Router, services }: Args): RouterType => {
-  const apiRouter = new Router({
-    prefix: ENV.API.V1_PATH,
-  });
-
+const initApis = ({ app, Router, services }: Args): void => {
   const { books: booksService, posts: postsService } = services;
 
   const booksApi = initBooksApi({
+    prefix: ENV.API.V1_PATH,
     Router,
     booksService,
   });
 
   const postsApi = initPostsApi({
+    prefix: ENV.API.V1_PATH,
     Router,
     postsService,
   });
@@ -29,10 +28,8 @@ const initApis = ({ Router, services }: Args): RouterType => {
   const routes = [booksApi, postsApi];
 
   routes.forEach((router) => {
-    apiRouter.use(router.routes()).use(router.allowedMethods());
+    app.use(router.routes()).use(router.allowedMethods());
   });
-
-  return apiRouter;
 };
 
 export { initApis };

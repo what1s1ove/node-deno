@@ -1,43 +1,51 @@
-import RouterInstance, { RouterContext } from 'koa-router';
-import { IDataService } from '../../common/interfaces';
-import { ApiPath, BooksApiPath } from '../../common/enums';
+import { Oak } from '../../dependencies.ts';
+import { IDataService } from '../../common/interfaces/index.ts';
+import { Book } from '../../common/types/index.ts';
+import { ApiPath, BooksApiPath } from '../../common/enums/index.ts';
 
 type Args = {
-  Router: typeof RouterInstance;
-  booksService: IDataService<unknown>;
+  prefix: string;
+  Router: typeof Oak.Router;
+  booksService: IDataService<Book>;
 };
 
-const initBooksApi = ({ Router, booksService }: Args): RouterInstance => {
+const initBooksApi = ({ prefix, Router, booksService }: Args): Oak.Router => {
   const router = new Router({
-    prefix: ApiPath.BOOKS,
+    prefix: `${prefix}${ApiPath.BOOKS}`,
   });
 
-  router.get(BooksApiPath.ROOT, async (ctx: RouterContext) => {
-    ctx.body = await booksService.findAll();
+  router.get(BooksApiPath.ROOT, async (ctx: Oak.RouterContext) => {
+    ctx.response.body = await booksService.findAll();
   });
 
-  router.get(BooksApiPath.$ID, async (ctx: RouterContext) => {
+  router.get(BooksApiPath.$ID, async (ctx: Oak.RouterContext) => {
     const { params } = ctx;
 
-    ctx.body = await booksService.findOne(params.id);
+    ctx.response.body = await booksService.findOne(<string>params.id);
   });
 
-  router.post(BooksApiPath.ROOT, async (ctx: RouterContext) => {
+  router.post(BooksApiPath.ROOT, async (ctx: Oak.RouterContext) => {
+    try {
+      const { request } = ctx;
+      const body = await request.body();
+
+      ctx.response.body = await booksService.create(await body.value);
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+  router.put(BooksApiPath.$ID, async (ctx: Oak.RouterContext) => {
     const { request } = ctx;
+    const body = await request.body();
 
-    ctx.body = await booksService.create(request.body);
+    ctx.response.body = await booksService.update(await body.value);
   });
 
-  router.put(BooksApiPath.$ID, async (ctx: RouterContext) => {
-    const { request } = ctx;
-
-    ctx.body = await booksService.update(request.body);
-  });
-
-  router.delete(BooksApiPath.$ID, async (ctx: RouterContext) => {
+  router.delete(BooksApiPath.$ID, async (ctx: Oak.RouterContext) => {
     const { params } = ctx;
 
-    ctx.body = await booksService.delete(params.id);
+    ctx.response.body = await booksService.delete(<string>params.id);
   });
 
   return router;

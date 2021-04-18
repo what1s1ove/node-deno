@@ -1,5 +1,5 @@
-import { IDataService, IRepository } from '../../common/interfaces';
-import { Book, CreateBookPayload } from '../../common/types';
+import { IDataService, IRepository } from '../../common/interfaces/index.ts';
+import { Book, CreateBookPayload } from '../../common/types/index.ts';
 
 type Constructor = {
   booksRepository: IRepository<unknown>;

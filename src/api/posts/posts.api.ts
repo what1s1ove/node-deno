@@ -1,25 +1,27 @@
-import RouterInstance, { RouterContext } from 'koa-router';
-import { ApiPath, PostApiPath } from '../../common/enums';
-import { IDataService } from '../../common/interfaces';
+import { Oak } from '../../dependencies.ts';
+import { ApiPath, PostApiPath } from '../../common/enums/index.ts';
+import { IDataService } from '../../common/interfaces/index.ts';
+import { Post } from '../../common/types/index.ts';
 
 type Args = {
-  Router: typeof RouterInstance;
-  postsService: Partial<IDataService<unknown>>;
+  prefix: string;
+  Router: typeof Oak.Router;
+  postsService: Partial<IDataService<Post>>;
 };
 
-const initPostsApi = ({ Router, postsService }: Args): RouterInstance => {
+const initPostsApi = ({ prefix, Router, postsService }: Args): Oak.Router => {
   const router = new Router({
-    prefix: ApiPath.POSTS,
+    prefix: `${prefix}${ApiPath.POSTS}`,
   });
 
-  router.get(PostApiPath.ROOT, async (ctx: RouterContext) => {
-    ctx.body = await postsService.findAll?.();
+  router.get(PostApiPath.ROOT, async (ctx: Oak.RouterContext) => {
+    ctx.response.body = await postsService.findAll?.();
   });
 
-  router.get(PostApiPath.$ID, async (ctx: RouterContext) => {
+  router.get(PostApiPath.$ID, async (ctx: Oak.RouterContext) => {
     const { params } = ctx;
 
-    ctx.body = await postsService.findOne?.(params.id);
+    ctx.response.body = await postsService.findOne?.(<string>params.id);
   });
 
   return router;

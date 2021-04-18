@@ -1,2 +1,2 @@
-export * from './book';
-export * from './post';
+export * from './book/index.ts';
+export * from './post/index.ts';

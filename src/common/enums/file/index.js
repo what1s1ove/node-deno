@@ -1,5 +1,1 @@
-const contentType = require('./content-type.enum');
-
-module.exports = {
-  contentType,
-};
+export * from './content-type.enum.js';

@@ -1,3 +1,3 @@
-export * from './api-path.enum';
-export * from './book-api-path.enum';
-export * from './post-api-path.enum';
+export * from './api-path.enum.ts';
+export * from './book-api-path.enum.ts';
+export * from './post-api-path.enum.ts';

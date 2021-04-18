@@ -1,38 +1,32 @@
-import axios, {
-  AxiosInstance,
-  AxiosError,
-  AxiosResponse,
-  AxiosRequestConfig,
-} from 'axios';
-import { HttpMethod } from '../../common/enums';
+import { HttpMethod } from '../../common/enums/index.ts';
 
 class Http {
-  #http: AxiosInstance;
-
-  constructor() {
-    this.#http = axios.create({});
-  }
-
   public load<T = unknown>(
     url: string,
-    options: AxiosRequestConfig = {
+    options: RequestInit = {
       method: HttpMethod.GET,
     },
   ): Promise<T> {
-    return this.#http
-      .request<T>({ url, ...options })
-      .then(Http.getData)
-      .catch(Http.catchError);
+    return fetch(url, options)
+      .then(this._checkStatus)
+      .then((res) => this._parseJSON<T>(res))
+      .catch(this._throwError);
   }
 
-  static getData<T>(response: AxiosResponse<T>): T {
-    return response.data;
+  private _checkStatus(response: Response): Response | never {
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    return response;
   }
 
-  static catchError(err: AxiosError<unknown>): never {
-    const { response } = err;
+  private _parseJSON<T>(response: Response): Promise<T> {
+    return response.json();
+  }
 
-    throw new Error(response?.statusText);
+  private _throwError(err: Error): never {
+    throw err;
   }
 }
 
