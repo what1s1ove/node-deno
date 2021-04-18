@@ -13,7 +13,7 @@ class Http {
       .catch(this._throwError);
   }
 
-  _checkStatus(response: Response): Response | never {
+  private _checkStatus(response: Response): Response | never {
     if (!response.ok) {
       throw new Error(response.statusText);
     }
@@ -21,11 +21,11 @@ class Http {
     return response;
   }
 
-  _parseJSON<T>(response: Response): Promise<T> {
+  private _parseJSON<T>(response: Response): Promise<T> {
     return response.json();
   }
 
-  _throwError(err: Error): never {
+  private _throwError(err: Error): never {
     throw err;
   }
 }
