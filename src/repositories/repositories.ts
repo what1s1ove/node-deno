@@ -1,4 +1,4 @@
-import { Books } from './book/books.repository';
+import { Books } from './book/books.repository.ts';
 
 type Repositories = {
   books: Books;

@@ -1,8 +1,8 @@
-import { ENV } from '../common/enums';
-import { initRepositories } from '../repositories/repositories';
-import { Books } from './books/books.service';
-import { Http } from './http/http.service';
-import { Posts } from './post/posts.service';
+import { ENV } from '../common/enums/index.ts';
+import { initRepositories } from '../repositories/repositories.ts';
+import { Books } from './books/books.service.ts';
+import { Http } from './http/http.service.ts';
+import { Posts } from './post/posts.service.ts';
 
 type Args = {
   repositories: ReturnType<typeof initRepositories>;

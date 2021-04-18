@@ -1,2 +1,2 @@
-export * from './services';
-export * from './repository';
+export * from './services/index.ts';
+export * from './repository/index.ts';

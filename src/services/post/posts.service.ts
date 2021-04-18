@@ -1,7 +1,7 @@
-import { ApiPath, HttpMethod, BooksApiPath } from '../../common/enums';
-import { IRepository } from '../../common/interfaces';
-import { Post } from '../../common/types';
-import { Http } from '../http/http.service';
+import { ApiPath, HttpMethod, BooksApiPath } from '../../common/enums/index.ts';
+import { IRepository } from '../../common/interfaces/index.ts';
+import { Post } from '../../common/types/index.ts';
+import { Http } from '../http/http.service.ts';
 
 type Constructor = {
   baseUrl: string;

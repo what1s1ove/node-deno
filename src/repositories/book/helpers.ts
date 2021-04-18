@@ -1,4 +1,4 @@
-import { Book, CreateBookPayload } from '../../common/types';
+import { Book, CreateBookPayload } from '../../common/types/index.ts';
 
 const getBookById = (books: Book[], id: string): Book | null => {
   return books.find((it) => it.id === id) ?? null;

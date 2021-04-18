@@ -1,2 +1,2 @@
-export * from './book.type';
-export * from './create-book-payload.type';
+export * from './book.type.ts';
+export * from './create-book-payload.type.ts';

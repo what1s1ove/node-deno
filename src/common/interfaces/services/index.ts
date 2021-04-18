@@ -1,1 +1,1 @@
-export * from './data-service.interface';
+export * from './data-service.interface.ts';

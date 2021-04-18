@@ -1,1 +1,1 @@
-export * from './http-method.enum';
+export * from './http-method.enum.ts';

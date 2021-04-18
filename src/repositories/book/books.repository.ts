@@ -1,10 +1,9 @@
-import path from 'path';
-import { readFile, writeFile } from '../../helpers';
-import { Book, CreateBookPayload } from '../../common/types';
-import { IRepository } from '../../common/interfaces';
-import { getBookById, getNewBook, updateBook, removeBook } from './helpers';
+import { readFile, writeFile } from '../../helpers/index.ts';
+import { Book, CreateBookPayload } from '../../common/types/index.ts';
+import { IRepository } from '../../common/interfaces/index.ts';
+import { getBookById, getNewBook, updateBook, removeBook } from './helpers.ts';
 
-const booksDataPath = path.resolve(__dirname, './books.json');
+const booksDataPath = new URL('./books.json', import.meta.url).pathname;
 
 class Books implements IRepository<Book> {
   findAll(): Promise<Book[]> {
@@ -50,11 +49,14 @@ class Books implements IRepository<Book> {
   private async _getBooks(): Promise<Book[]> {
     const books = await readFile(booksDataPath);
 
-    return JSON.parse(books.toString());
+    return JSON.parse(books);
   }
 
   private _saveBooks(books: Book[]): Promise<void> {
-    return writeFile(booksDataPath, JSON.stringify(books));
+    return writeFile(
+      booksDataPath,
+      new TextEncoder().encode(JSON.stringify(books)),
+    );
   }
 }
 
